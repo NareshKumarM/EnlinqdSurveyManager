@@ -1,4 +1,4 @@
-﻿namespace EnlinqdSurveyManager.Models
+﻿namespace EnlinqdSurveyManager.Domain.Models
 {
     public class SurveyDefinition
     {
