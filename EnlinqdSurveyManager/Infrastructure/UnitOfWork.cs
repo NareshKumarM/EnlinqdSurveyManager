@@ -17,6 +17,6 @@ namespace EnlinqdSurveyManager.Infrastructure
 
         //public ISurveyRepository SurveyRepository => this._surveyRepo ?? (this._surveyRepo = new SurveyRepository(_dbContext));
 
-        public ISurveyRepository IUnitOfWork.surveyRepository => this._surveyRepo ?? (this._surveyRepo = new SurveyRepository(_dbContext));
+        ISurveyRepository IUnitOfWork.surveyRepository => this._surveyRepo ?? (this._surveyRepo = new SurveyRepository(_dbContext));
     }
 }
