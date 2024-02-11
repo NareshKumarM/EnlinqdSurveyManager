@@ -15,15 +15,16 @@ namespace EnlinqdSurveyManager.Controllers
     {
         #region Private Fields
 
-        private readonly ISurveyQueries _surveyQueries;
-        private SurveyDBContext surveyDBContext;
+        //private readonly ISurveyQueries _surveyQueries;
+        private readonly SurveyDBContext surveyDBContext;
 
         #endregion Private Fields
 
-        public SurveysController(SurveyDBContext dbContext, SurveyQueries surveyQueries)
+        //public SurveysController(SurveyDBContext dbContext, SurveyQueries surveyQueries)
+        public SurveysController(SurveyDBContext dbContext)
         {
             this.surveyDBContext = dbContext;
-            _surveyQueries = surveyQueries;
+            //_surveyQueries = surveyQueries;
         }
 
         // GET: api/<SurveysController>
@@ -57,7 +58,7 @@ namespace EnlinqdSurveyManager.Controllers
                 Json = surveyDefinitionDTO.Json
             };
 
-            await surveyDBContext.SurveyDefinitions.AddAsync(survey,cancellationToken);
+            await surveyDBContext.SurveyDefinitions.AddAsync(survey, cancellationToken);
             await surveyDBContext.SaveChangesAsync();
             return Ok(survey);
         }
