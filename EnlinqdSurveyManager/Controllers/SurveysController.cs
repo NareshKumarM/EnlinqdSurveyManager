@@ -50,7 +50,6 @@ namespace EnlinqdSurveyManager.Controllers
         [HttpPost]
         public async Task<IActionResult> AddSurvey([FromBody] SurveyDefinitionDTO surveyDefinitionDTO, CancellationToken cancellationToken = default)
         {
-
             SurveyDefinition survey = new SurveyDefinition
             {
                 Id = Guid.NewGuid(),
@@ -65,14 +64,35 @@ namespace EnlinqdSurveyManager.Controllers
 
         // PATCH api/<SurveysController>/5
         [HttpPatch("{id}")]
-        public void Put(Guid id, [FromBody] string value)
+        public async Task<IActionResult> Put(Guid id, [FromBody] string value)
         {
+            var survey = await surveyDBContext.SurveyDefinitions.FindAsync(id);
+            if (survey == null)
+            {
+                return NotFound();
+            }
+
+            if (value != null && !String.Equals(value, survey.Json, StringComparison.OrdinalIgnoreCase) {
+                survey.Json = value;
+                await surveyDBContext.SaveChangesAsync();
+            }
+
+            return Ok(survey);
         }
 
         // DELETE api/<SurveysController>/5
         [HttpDelete("{id}")]
-        public void Delete(Guid id)
+        public IActionResult Delete(Guid id)
         {
+
+            var survey = surveyDBContext.SurveyDefinitions.SingleOrDefault(s => s.Id == id);
+            if (survey == null)
+            {
+                return NotFound();
+            }
+
+            surveyDBContext.SurveyDefinitions.Remove(survey);
+            return Ok();
         }
     }
 }
