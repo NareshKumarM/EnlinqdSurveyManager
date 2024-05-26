@@ -1,4 +1,5 @@
-﻿using EnlinqdSurveyManager.Domain.Models;
+﻿using EnlinqdSurveyManager.Application.Commands;
+using EnlinqdSurveyManager.Domain.Models;
 using EnlinqdSurveyManager.DTOs;
 using EnlinqdSurveyManager.Queries;
 using Microsoft.AspNetCore.Mvc;
@@ -17,13 +18,16 @@ namespace EnlinqdSurveyManager.Controllers
 
         //private readonly ISurveyQueries _surveyQueries;
         private readonly SurveyDBContext surveyDBContext;
+        private readonly IUpdateSurveyCommandHandler _updateSurveyCommandHandler;
 
         #endregion Private Fields
 
         //public SurveysController(SurveyDBContext dbContext, SurveyQueries surveyQueries)
-        public SurveysController(SurveyDBContext dbContext)
+        public SurveysController(SurveyDBContext dbContext,
+            IUpdateSurveyCommandHandler updateSurveyCommandHandler)
         {
             this.surveyDBContext = dbContext;
+            _updateSurveyCommandHandler = updateSurveyCommandHandler;
             //_surveyQueries = surveyQueries;
         }
 
@@ -50,7 +54,6 @@ namespace EnlinqdSurveyManager.Controllers
         [HttpPost]
         public async Task<IActionResult> AddSurvey([FromBody] SurveyDefinitionDTO surveyDefinitionDTO, CancellationToken cancellationToken = default)
         {
-
             SurveyDefinition survey = new SurveyDefinition
             {
                 Id = Guid.NewGuid(),
@@ -65,14 +68,25 @@ namespace EnlinqdSurveyManager.Controllers
 
         // PATCH api/<SurveysController>/5
         [HttpPatch("{id}")]
-        public void Put(Guid id, [FromBody] string value)
+        public async Task<IActionResult> Patch(Guid id, List<PatchCommand> patchCommands, CancellationToken cancellationToken = default)
         {
+            SurveyDefinitionDTO updatedSurveyDTO = await _updateSurveyCommandHandler.UpdateSurveyAsync(id, patchCommands, cancellationToken);
+            return Ok(updatedSurveyDTO);
         }
 
         // DELETE api/<SurveysController>/5
         [HttpDelete("{id}")]
-        public void Delete(Guid id)
+        public IActionResult Delete(Guid id)
         {
+
+            var survey = surveyDBContext.SurveyDefinitions.SingleOrDefault(s => s.Id == id);
+            if (survey == null)
+            {
+                return NotFound();
+            }
+
+            surveyDBContext.SurveyDefinitions.Remove(survey);
+            return Ok();
         }
     }
 }

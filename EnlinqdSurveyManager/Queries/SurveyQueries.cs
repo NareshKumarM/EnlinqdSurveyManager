@@ -20,12 +20,12 @@ namespace EnlinqdSurveyManager.Queries
 
         #region Public Methods
 
-        public async Task<SurveyDefinitionDTO?> GetSurveyDefinitionByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<SurveyDefinitionDTO> GetSurveyDefinitionByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             if (id == Guid.Empty)
                 throw new ValidationException("Please supply a valid SurveyDefinition ID");
 
-            SurveyDefinition survey = await _unitOfWork.surveyRepository.GetSurveyDefinitionByIdAsync(id, cancellationToken);
+            SurveyDefinition survey = await _unitOfWork.SurveyRepository.GetSurveyDefinitionByIdAsync(id, cancellationToken);
 
             if (survey == null)
             {
@@ -37,9 +37,9 @@ namespace EnlinqdSurveyManager.Queries
             return alarmDTO;
         }
 
-        public async Task<IEnumerable<SurveyDefinitionDTO>?> GetAllSurveyDefinitionsAsync(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<SurveyDefinitionDTO>> GetAllSurveyDefinitionsAsync(CancellationToken cancellationToken = default)
         {
-            List<SurveyDefinition>? surveys = (await _unitOfWork.surveyRepository.GetAllSurveyDefinitionsAsync(cancellationToken))?.ToList();
+            List<SurveyDefinition>? surveys = (await _unitOfWork.SurveyRepository.GetAllSurveyDefinitionsAsync(cancellationToken))?.ToList();
 
             if (surveys == null || !surveys.Any())
                 return null;
