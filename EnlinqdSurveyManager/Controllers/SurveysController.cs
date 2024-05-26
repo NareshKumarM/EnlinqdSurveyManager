@@ -1,4 +1,5 @@
-﻿using EnlinqdSurveyManager.Domain.Models;
+﻿using EnlinqdSurveyManager.Application.Commands;
+using EnlinqdSurveyManager.Domain.Models;
 using EnlinqdSurveyManager.DTOs;
 using EnlinqdSurveyManager.Queries;
 using Microsoft.AspNetCore.Mvc;
@@ -17,13 +18,16 @@ namespace EnlinqdSurveyManager.Controllers
 
         //private readonly ISurveyQueries _surveyQueries;
         private readonly SurveyDBContext surveyDBContext;
+        private readonly IUpdateSurveyCommandHandler _updateSurveyCommandHandler;
 
         #endregion Private Fields
 
         //public SurveysController(SurveyDBContext dbContext, SurveyQueries surveyQueries)
-        public SurveysController(SurveyDBContext dbContext)
+        public SurveysController(SurveyDBContext dbContext,
+            IUpdateSurveyCommandHandler updateSurveyCommandHandler)
         {
             this.surveyDBContext = dbContext;
+            _updateSurveyCommandHandler = updateSurveyCommandHandler;
             //_surveyQueries = surveyQueries;
         }
 
@@ -64,20 +68,10 @@ namespace EnlinqdSurveyManager.Controllers
 
         // PATCH api/<SurveysController>/5
         [HttpPatch("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] string value)
+        public async Task<IActionResult> Patch(Guid id, List<PatchCommand> patchCommands, CancellationToken cancellationToken = default)
         {
-            var survey = await surveyDBContext.SurveyDefinitions.FindAsync(id);
-            if (survey == null)
-            {
-                return NotFound();
-            }
-
-            if (value != null && !String.Equals(value, survey.Json, StringComparison.OrdinalIgnoreCase) {
-                survey.Json = value;
-                await surveyDBContext.SaveChangesAsync();
-            }
-
-            return Ok(survey);
+            SurveyDefinitionDTO updatedSurveyDTO = await _updateSurveyCommandHandler.UpdateSurveyAsync(id, patchCommands, cancellationToken);
+            return Ok(updatedSurveyDTO);
         }
 
         // DELETE api/<SurveysController>/5

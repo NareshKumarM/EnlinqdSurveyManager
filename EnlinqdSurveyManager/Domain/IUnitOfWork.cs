@@ -4,6 +4,8 @@ namespace EnlinqdSurveyManager.Domain
 {
     public interface IUnitOfWork
     {
-        ISurveyRepository surveyRepository { get; }
+        ISurveyRepository SurveyRepository { get; }
+
+        Task SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

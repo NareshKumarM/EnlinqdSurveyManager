@@ -15,7 +15,7 @@ namespace EnlinqdSurveyManager.Infrastructure.Repositories
             return await query.ToListAsync(cancellationToken);
         }
 
-        public async Task<SurveyDefinition?> GetSurveyDefinitionByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<SurveyDefinition> GetSurveyDefinitionByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var survey = await _dbContext.SurveyDefinitions.FindAsync(id, cancellationToken);
             return survey;
