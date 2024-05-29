@@ -76,11 +76,11 @@ namespace EnlinqdSurveyManager.Application.Commands
 
         private async Task ApplySurveyPatchCommandsAsync(SurveyDefinition survey, List<PatchCommand> patchCommands, CancellationToken cancellationToken)
         {
-            List<PatchCommand> patchCommandsToExecute = patchCommands.Where(p => p.Command == "ChangeAlarmActiveDates").ToList();
+            List<PatchCommand> patchCommandsToExecute = patchCommands.Where(p => p.Command == "UpdateTitle").ToList();
             if (patchCommandsToExecute.Any())
                 await UpdateTitle(survey, patchCommandsToExecute, cancellationToken);
 
-            patchCommandsToExecute = patchCommands.Where(p => p.Command == "ChangeAlarmMeterType").ToList();
+            patchCommandsToExecute = patchCommands.Where(p => p.Command == "UpdateSurvey").ToList();
             if (patchCommandsToExecute.Any())
                 await UpdateSurvey(survey, patchCommandsToExecute, cancellationToken);
 
