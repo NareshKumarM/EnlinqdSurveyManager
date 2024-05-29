@@ -2,8 +2,6 @@ using EnlinqdSurveyManager.Domain;
 using EnlinqdSurveyManager.Domain.Models;
 using EnlinqdSurveyManager.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using System;
 
 namespace EnlinqdSurveyManager
 {
@@ -16,11 +14,12 @@ namespace EnlinqdSurveyManager
             // Add services to the container.
             builder.Services.AddDbContext<SurveyDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SurveyContext")));
 
-            builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<IUpdateSurveyCommandHandler, UpdateSurveyCommandHandler>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddControllers();
 
             var app = builder.Build();
 
