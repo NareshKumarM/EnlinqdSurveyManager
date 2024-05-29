@@ -1,5 +1,6 @@
 using EnlinqdSurveyManager.Domain;
 using EnlinqdSurveyManager.Domain.Models;
+using EnlinqdSurveyManager.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace EnlinqdSurveyManager
