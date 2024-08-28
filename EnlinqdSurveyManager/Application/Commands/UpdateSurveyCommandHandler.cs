@@ -1,5 +1,6 @@
 ﻿using EnlinqdSurveyManager.Domain;
-using EnlinqdSurveyManager.Domain.Models;
+using EnlinqdSurveyManager.Domain.Models.PatchCommand;
+using EnlinqdSurveyManager.Domain.Models.Survey;
 using EnlinqdSurveyManager.DTOs;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;

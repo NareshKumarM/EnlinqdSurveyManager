@@ -1,4 +1,4 @@
-﻿using EnlinqdSurveyManager.Domain.Models;
+﻿using EnlinqdSurveyManager.Domain.Models.PatchCommand;
 using EnlinqdSurveyManager.DTOs;
 
 namespace EnlinqdSurveyManager.Application.Commands

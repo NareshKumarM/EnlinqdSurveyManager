@@ -5,22 +5,22 @@
 namespace EnlinqdSurveyManager.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initpayoutsummary : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "SurveyDefinitions",
+                name: "PayoutSummaryBatches",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Json = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    SummaryBatchId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SurveyDefinitions", x => x.Id);
+                    table.PrimaryKey("PK_PayoutSummaryBatches", x => x.Id);
                 });
         }
 
@@ -28,7 +28,7 @@ namespace EnlinqdSurveyManager.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SurveyDefinitions");
+                name: "PayoutSummaryBatches");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using EnlinqdSurveyManager.Domain.Models;
+﻿using EnlinqdSurveyManager.Domain.Models.Survey;
 
 namespace EnlinqdSurveyManager.Domain.Repositories
 {
