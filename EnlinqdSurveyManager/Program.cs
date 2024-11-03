@@ -17,6 +17,7 @@ namespace EnlinqdSurveyManager
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddHttpClient();
             builder.Services.AddScoped<IUpdateSurveyCommandHandler, UpdateSurveyCommandHandler>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddControllers();
