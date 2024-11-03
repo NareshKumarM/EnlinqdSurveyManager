@@ -1,4 +1,4 @@
-﻿namespace EnlinqdSurveyManager.Domain.Models
+﻿namespace EnlinqdSurveyManager.Domain.Models.PatchCommand
 {
     public class PatchCommandFilter
     {

@@ -1,4 +1,5 @@
-﻿using EnlinqdSurveyManager.Domain.Models;
+﻿using EnlinqdSurveyManager.Domain;
+using EnlinqdSurveyManager.Domain.Models.Survey;
 using EnlinqdSurveyManager.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,8 +7,8 @@ namespace EnlinqdSurveyManager.Infrastructure.Repositories
 {
     public class SurveyRepository: ISurveyRepository
     {
-        private readonly SurveyDBContext _dbContext;
-        public SurveyRepository(SurveyDBContext surveyDBContext) => _dbContext = surveyDBContext;
+        private readonly EnlinqdDBContext _dbContext;
+        public SurveyRepository(EnlinqdDBContext enlinqdDBContext) => _dbContext = enlinqdDBContext;
 
         public async Task<IEnumerable<SurveyDefinition>> GetAllSurveyDefinitionsAsync(CancellationToken cancellationToken = default)
         {

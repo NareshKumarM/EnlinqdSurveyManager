@@ -1,5 +1,5 @@
 ﻿using EnlinqdSurveyManager.Domain;
-using EnlinqdSurveyManager.Domain.Models;
+using EnlinqdSurveyManager.Domain.Models.Survey;
 using EnlinqdSurveyManager.DTOs;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;

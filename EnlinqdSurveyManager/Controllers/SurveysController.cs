@@ -1,10 +1,10 @@
 ﻿using EnlinqdSurveyManager.Application.Commands;
-using EnlinqdSurveyManager.Domain.Models;
+using EnlinqdSurveyManager.Domain;
+using EnlinqdSurveyManager.Domain.Models.PatchCommand;
+using EnlinqdSurveyManager.Domain.Models.Survey;
 using EnlinqdSurveyManager.DTOs;
-using EnlinqdSurveyManager.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,16 +17,16 @@ namespace EnlinqdSurveyManager.Controllers
         #region Private Fields
 
         //private readonly ISurveyQueries _surveyQueries;
-        private readonly SurveyDBContext surveyDBContext;
+        private readonly EnlinqdDBContext enlinqdDBContext;
         private readonly IUpdateSurveyCommandHandler _updateSurveyCommandHandler;
 
         #endregion Private Fields
 
         //public SurveysController(SurveyDBContext dbContext, SurveyQueries surveyQueries)
-        public SurveysController(SurveyDBContext dbContext,
+        public SurveysController(EnlinqdDBContext dbContext,
             IUpdateSurveyCommandHandler updateSurveyCommandHandler)
         {
-            this.surveyDBContext = dbContext;
+            this.enlinqdDBContext = dbContext;
             _updateSurveyCommandHandler = updateSurveyCommandHandler;
             //_surveyQueries = surveyQueries;
         }
@@ -35,14 +35,14 @@ namespace EnlinqdSurveyManager.Controllers
         [HttpGet("summary")]
         public async Task<IActionResult> GetContacts()
         {
-            return Ok(await surveyDBContext.SurveyDefinitions.ToListAsync());
+            return Ok(await enlinqdDBContext.SurveyDefinitions.ToListAsync());
         }
 
         // GET api/<SurveysController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
-            var survey = await surveyDBContext.SurveyDefinitions.FindAsync(id);
+            var survey = await enlinqdDBContext.SurveyDefinitions.FindAsync(id);
             if (survey == null)
             {
                 return NotFound();
@@ -61,8 +61,8 @@ namespace EnlinqdSurveyManager.Controllers
                 Json = surveyDefinitionDTO.Json
             };
 
-            await surveyDBContext.SurveyDefinitions.AddAsync(survey, cancellationToken);
-            await surveyDBContext.SaveChangesAsync();
+            await enlinqdDBContext.SurveyDefinitions.AddAsync(survey, cancellationToken);
+            await enlinqdDBContext.SaveChangesAsync();
             return Ok(survey);
         }
 
@@ -79,13 +79,13 @@ namespace EnlinqdSurveyManager.Controllers
         public IActionResult Delete(Guid id)
         {
 
-            var survey = surveyDBContext.SurveyDefinitions.SingleOrDefault(s => s.Id == id);
+            var survey = enlinqdDBContext.SurveyDefinitions.SingleOrDefault(s => s.Id == id);
             if (survey == null)
             {
                 return NotFound();
             }
 
-            surveyDBContext.SurveyDefinitions.Remove(survey);
+            enlinqdDBContext.SurveyDefinitions.Remove(survey);
             return Ok();
         }
     }
