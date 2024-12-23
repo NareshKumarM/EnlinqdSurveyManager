@@ -1,6 +1,4 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
 
 namespace EnlinqdSurveyManager.Controllers
@@ -11,6 +9,8 @@ namespace EnlinqdSurveyManager.Controllers
     {
         private readonly HttpClient _httpClient;
         protected static readonly string _token = "TEST_viNlCbjK8--BjNJcB4lgM8FKHrY03K3nGa5uaNOliCB";
+        protected static readonly string _endpoint = "https://testflight.tremendous.com/api/v2";
+
         public RewardsController(HttpClient httpClient)
         {
             _httpClient = httpClient;
@@ -21,12 +21,11 @@ namespace EnlinqdSurveyManager.Controllers
         {
             try
             {
-                var endpoint = new Uri($"https://testflight.tremendous.com/api/v2/products?country={country}&currency={currency}");
+                var endpoint = new Uri($"{_endpoint}/products?country={country}&currency={currency}");
                 _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
 
-                //HttpResponseMessage response = await _httpClient.GetAsync(parameters).ConfigureAwait(false);
-                var response = _httpClient.GetAsync(endpoint,cancellationToken).Result;
+                var response = _httpClient.GetAsync(endpoint, cancellationToken).Result;
                 response.EnsureSuccessStatusCode();
 
                 string result = response.Content.ReadAsStringAsync().Result;
@@ -38,5 +37,7 @@ namespace EnlinqdSurveyManager.Controllers
                 throw;
             }
         }
+
+        
     }
 }
