@@ -2,8 +2,9 @@
 
 namespace EnlinqdSurveyManager.Domain.Models.Order
 {
-    public class TremendousOrder
+    public class Order
     {
+
         [JsonPropertyName("external_id")]
         public string? ExternalId { get; set; }
 
@@ -34,7 +35,7 @@ namespace EnlinqdSurveyManager.Domain.Models.Order
             public RewardRecipient Recipient { get; set; }
 
             [JsonPropertyName("products")]
-            public List<string> Products { get; set; } = new List<string>();
+            public List<string> Products { get; set; }
         }
 
         public class RewardValue
@@ -60,9 +61,9 @@ namespace EnlinqdSurveyManager.Domain.Models.Order
             public string Email { get; set; }
         }
 
-        public TremendousOrder() { }
+        public Order() { }
 
-        public TremendousOrder(PaymentDetails paymentDetails, RewardValue rewardValue, RewardDelivery rewardDelivery, RewardRecipient rewardRecipient, List<string> products, string? campaignId = null, string? externalId = null) {
+        public Order(PaymentDetails paymentDetails, RewardValue rewardValue, RewardDelivery rewardDelivery, RewardRecipient rewardRecipient, List<string> products, string? campaignId = null, string? externalId = null) {
             this.ExternalId = externalId;
             this.CampaignId = campaignId;
             this.Payment = paymentDetails;

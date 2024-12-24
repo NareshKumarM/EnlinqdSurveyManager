@@ -72,11 +72,11 @@ namespace EnlinqdSurveyManager.Controllers.Tremendous
                 _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
 
-                TremendousOrder order = new TremendousOrder(
-                    new TremendousOrder.PaymentDetails { FundingSourceId = rewardRequest.FundingSourceId },
-                    new TremendousOrder.RewardValue { CurrencyCode = rewardRequest.CurrencyCode, Denomination = rewardRequest.Denomination },
-                    new TremendousOrder.RewardDelivery { Method = rewardRequest.DeliveryMethod },
-                    new TremendousOrder.RewardRecipient { Email = rewardRequest.RecipientEmail, Name = rewardRequest.RecipientName },
+                Order order = new Order(
+                    new Order.PaymentDetails { FundingSourceId = rewardRequest.FundingSourceId },
+                    new Order.RewardValue { CurrencyCode = rewardRequest.CurrencyCode, Denomination = rewardRequest.Denomination },
+                    new Order.RewardDelivery { Method = rewardRequest.DeliveryMethod },
+                    new Order.RewardRecipient { Email = rewardRequest.RecipientEmail, Name = rewardRequest.RecipientName },
                     rewardRequest.Products,
                     rewardRequest.CampaignId,
                     rewardRequest.ExternalId
@@ -97,7 +97,7 @@ namespace EnlinqdSurveyManager.Controllers.Tremendous
             }
         }
 
-        [HttpPost("id:string")]
+        [HttpPost("approveorder/id:string")]
         public async Task<IActionResult> ApproveOrder(string id, CancellationToken cancellationToken = default)
         {
             try
@@ -122,7 +122,7 @@ namespace EnlinqdSurveyManager.Controllers.Tremendous
             }
         }
 
-        [HttpPost("id:string")]
+        [HttpPost("rejectorder/id:string")]
         public async Task<IActionResult> RejectOrder(string id, CancellationToken cancellationToken = default)
         {
             try
