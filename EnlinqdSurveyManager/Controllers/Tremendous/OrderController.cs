@@ -7,6 +7,8 @@ using System.Text;
 
 namespace EnlinqdSurveyManager.Controllers.Tremendous
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class OrderController : ControllerBase
     {
         private readonly HttpClient _httpClient;
