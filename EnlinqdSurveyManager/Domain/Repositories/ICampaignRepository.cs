@@ -4,7 +4,8 @@ namespace EnlinqdSurveyManager.Domain.Repositories
 {
     public interface ICampaignRepository
     {
-        Task<IEnumerable<Campaign>> GetAllCampaignsAsync(CancellationToken cancellationToken = default);
-        Task<Campaign> GetCampaignByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<IEnumerable<CampaignDb>> GetAllCampaignsAsync(CancellationToken cancellationToken = default);
+        Task<CampaignDb> GetCampaignByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<CampaignDb> AddCampaignAsync(CampaignDb campaign, CancellationToken cancellationToken = default);
     }
 }

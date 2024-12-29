@@ -2,11 +2,9 @@
 using EnlinqdSurveyManager.Domain.Models.PatchCommand;
 using EnlinqdSurveyManager.Domain.Models.Survey;
 using EnlinqdSurveyManager.DTOs;
-using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
 
-namespace EnlinqdSurveyManager.Application.Commands
+namespace EnlinqdSurveyManager.Application.Commands.Survey
 {
     public partial class UpdateSurveyCommandHandler : IUpdateSurveyCommandHandler
     {
@@ -45,7 +43,7 @@ namespace EnlinqdSurveyManager.Application.Commands
 
             SurveyDefinition survey = await _unitOfWork.SurveyRepository.GetSurveyDefinitionByIdAsync(id, cancellationToken);
 
-            if(survey == null)
+            if (survey == null)
             {
                 throw new ValidationException("Survey not available");
             }
@@ -102,7 +100,7 @@ namespace EnlinqdSurveyManager.Application.Commands
         {
             foreach (PatchCommand patchCommand in patchCommandsToExecute)
             {
-                if (!string.Equals(survey?.Json,patchCommand.Value,StringComparison.OrdinalIgnoreCase))
+                if (!string.Equals(survey?.Json, patchCommand.Value, StringComparison.OrdinalIgnoreCase))
                 {
                     survey.Json = patchCommand.Value;
                 }

@@ -8,7 +8,6 @@ namespace EnlinqdSurveyManager.EntityTypeConfiguration
     {
         public void Configure(EntityTypeBuilder<Campaign> builder)
         {
-            builder.HasKey(c => c.Id);
             builder.Property(c => c.Name).IsRequired().HasMaxLength(200);
             builder.Property(c => c.Description).HasMaxLength(500);
             builder.Property(c => c.Products).HasConversion(

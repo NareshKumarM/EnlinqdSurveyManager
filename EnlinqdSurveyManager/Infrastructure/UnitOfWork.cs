@@ -9,6 +9,8 @@ namespace EnlinqdSurveyManager.Infrastructure
         private readonly EnlinqdDBContext _dbContext;
 
         private ISurveyRepository _surveyRepo;
+        //private ICampaignRepository _campaignRepo;
+        private IOrderRepository _orderRepo;
 
         public UnitOfWork(EnlinqdDBContext dbContext)
         {
@@ -16,6 +18,8 @@ namespace EnlinqdSurveyManager.Infrastructure
         }
 
         public ISurveyRepository SurveyRepository => this._surveyRepo ?? (this._surveyRepo = new SurveyRepository(_dbContext));
+        //public ICampaignRepository CampaignRepository => this._campaignRepo ?? (this._campaignRepo = new CampaignRepository(_dbContext));
+        public IOrderRepository OrderRepository => this._orderRepo ?? (this._orderRepo = new OrderRepository(_dbContext));
 
         public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -30,7 +34,7 @@ namespace EnlinqdSurveyManager.Infrastructure
             }
             catch (Exception ex)
             {
-                //LoggerExtensions.LogError(eventId: new EventId(-1, "UnitOfWork TrySaveChangesAsync Failed"), logger: _logger, exception: ex, message: "[ERROR] - UnitOfWork TrySaveChangesAsync Failed. Message: [" + ex.GetBaseException().Message + "].", args: Array.Empty<object>());
+                throw ex;
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using EnlinqdSurveyManager.Domain.Models.Order;
+﻿using EnlinqdSurveyManager.Application.Commands.Orders;
 using EnlinqdSurveyManager.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -12,10 +12,12 @@ namespace EnlinqdSurveyManager.Controllers.Tremendous
         private readonly HttpClient _httpClient;
         protected static readonly string _token = "TEST_viNlCbjK8--BjNJcB4lgM8FKHrY03K3nGa5uaNOliCB";
         protected static readonly string _endpoint = "https://testflight.tremendous.com/api/v2";
+        private readonly IOrderCommandHandler _orderCommandHandler;
 
-        public OrderController(HttpClient httpClient)
+        public OrderController(HttpClient httpClient, IOrderCommandHandler orderCommandHandler)
         {
             _httpClient = httpClient;
+            _orderCommandHandler = orderCommandHandler;
         }
 
 
@@ -63,33 +65,20 @@ namespace EnlinqdSurveyManager.Controllers.Tremendous
             }
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateOrder([FromBody] RewardRequestDTO rewardRequest, CancellationToken cancellationToken = default)
         {
             try
             {
-                var endpoint = new Uri($"{_endpoint}/orders");
-                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
-
-                Order order = new Order(
-                    new Order.PaymentDetails { FundingSourceId = rewardRequest.FundingSourceId },
-                    new Order.RewardValue { CurrencyCode = rewardRequest.CurrencyCode, Denomination = rewardRequest.Denomination },
-                    new Order.RewardDelivery { Method = rewardRequest.DeliveryMethod },
-                    new Order.RewardRecipient { Email = rewardRequest.RecipientEmail, Name = rewardRequest.RecipientName },
-                    rewardRequest.Products,
-                    rewardRequest.CampaignId,
-                    rewardRequest.ExternalId
-                );
-
-                string jsonPayload = JsonConvert.SerializeObject(order);
-                var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-
-                var response = await _httpClient.PostAsync(endpoint.ToString(), httpContent);
-
-                string result = response.Content.ReadAsStringAsync().Result;
-
-                return Ok(result);
+                try
+                {
+                    string result = await _orderCommandHandler.CreateOrderAsync(rewardRequest, cancellationToken);
+                    return Ok(result);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
             catch (Exception)
             {

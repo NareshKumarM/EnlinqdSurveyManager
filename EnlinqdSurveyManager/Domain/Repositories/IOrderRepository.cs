@@ -6,5 +6,6 @@ namespace EnlinqdSurveyManager.Domain.Repositories
     {
         Task<IEnumerable<OrderDb>> GetAllOrdersAsync(CancellationToken cancellationToken = default);
         Task<OrderDb> GetOrderByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<OrderDb> AddNewOrderAsync(OrderDb order, CancellationToken cancellationToken = default);
     }
 }

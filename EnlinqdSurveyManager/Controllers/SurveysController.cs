@@ -1,4 +1,4 @@
-﻿using EnlinqdSurveyManager.Application.Commands;
+﻿using EnlinqdSurveyManager.Application.Commands.Survey;
 using EnlinqdSurveyManager.Domain;
 using EnlinqdSurveyManager.Domain.Models.PatchCommand;
 using EnlinqdSurveyManager.Domain.Models.Survey;

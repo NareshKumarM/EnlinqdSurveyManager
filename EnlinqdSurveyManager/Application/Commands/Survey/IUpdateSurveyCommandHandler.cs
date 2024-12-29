@@ -1,7 +1,7 @@
 ﻿using EnlinqdSurveyManager.Domain.Models.PatchCommand;
 using EnlinqdSurveyManager.DTOs;
 
-namespace EnlinqdSurveyManager.Application.Commands
+namespace EnlinqdSurveyManager.Application.Commands.Survey
 {
     public interface IUpdateSurveyCommandHandler
     {

@@ -1,9 +1,7 @@
-﻿using EnlinqdSurveyManager.Domain.Models.Campaign;
+﻿using EnlinqdSurveyManager.Application.Commands.Campaigns;
 using EnlinqdSurveyManager.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Net.Http.Headers;
-using System.Text;
 
 namespace EnlinqdSurveyManager.Controllers.Tremendous
 {
@@ -12,10 +10,15 @@ namespace EnlinqdSurveyManager.Controllers.Tremendous
         private readonly HttpClient _httpClient;
         protected static readonly string _token = "TEST_viNlCbjK8--BjNJcB4lgM8FKHrY03K3nGa5uaNOliCB";
         protected static readonly string _endpoint = "https://testflight.tremendous.com/api/v2/campaigns";
+        private readonly ICampaignCommandHandler _campaignCommandHandler;
 
-        public CampaignController(HttpClient httpClient)
+        public CampaignController(HttpClient httpClient,
+            ICampaignCommandHandler campaignCommandHandler)
         {
             _httpClient = httpClient;
+            _campaignCommandHandler = campaignCommandHandler;
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
         }
 
         [HttpGet("campaigns")]
@@ -24,9 +27,6 @@ namespace EnlinqdSurveyManager.Controllers.Tremendous
             try
             {
                 var endpoint = new Uri($"{_endpoint}");
-                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
-
                 var response = _httpClient.GetAsync(endpoint, cancellationToken).Result;
                 response.EnsureSuccessStatusCode();
 
@@ -46,9 +46,6 @@ namespace EnlinqdSurveyManager.Controllers.Tremendous
             try
             {
                 var endpoint = new Uri($"{_endpoint}/{id}");
-                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
-
                 var response = _httpClient.GetAsync(endpoint, cancellationToken).Result;
                 response.EnsureSuccessStatusCode();
 
@@ -67,21 +64,7 @@ namespace EnlinqdSurveyManager.Controllers.Tremendous
         {
             try
             {
-                var endpoint = new Uri($"{_endpoint}");
-                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
-
-                List<string> products = campaignRequest.ProductsCSV.Split(',').ToList();
-
-                Campaign Campaign = new Campaign(campaignRequest.Name, campaignRequest.Description, products);
-
-                string jsonPayload = JsonConvert.SerializeObject(Campaign);
-                var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-
-                var response = await _httpClient.PostAsync(endpoint.ToString(), httpContent);
-
-                string result = response.Content.ReadAsStringAsync().Result;
-
+                string result = await _campaignCommandHandler.CreateCampaignAsync(campaignRequest, cancellationToken);
                 return Ok(result);
             }
             catch (Exception)
@@ -95,21 +78,7 @@ namespace EnlinqdSurveyManager.Controllers.Tremendous
         {
             try
             {
-                var endpoint = new Uri($"{_endpoint}/{id}");
-                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
-
-                List<string> products = campaignRequest.ProductsCSV.Split(',').ToList();
-
-                Campaign Campaign = new Campaign(campaignRequest.Name, campaignRequest.Description, products);
-
-                string jsonPayload = JsonConvert.SerializeObject(Campaign);
-                var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-
-                var response = await _httpClient.PutAsync(endpoint.ToString(), httpContent);
-
-                string result = response.Content.ReadAsStringAsync().Result;
-
+                string result = await _campaignCommandHandler.UpdateCampaignAsync(id, campaignRequest, cancellationToken);
                 return Ok(result);
             }
             catch (Exception)
