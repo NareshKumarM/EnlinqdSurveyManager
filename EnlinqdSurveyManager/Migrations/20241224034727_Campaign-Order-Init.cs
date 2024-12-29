@@ -5,10 +5,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EnlinqdSurveyManager.Migrations
 {
-    /// <inheritdoc />
     public partial class CampaignOrderInit : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -64,7 +62,6 @@ namespace EnlinqdSurveyManager.Migrations
                 column: "OrderId");
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
