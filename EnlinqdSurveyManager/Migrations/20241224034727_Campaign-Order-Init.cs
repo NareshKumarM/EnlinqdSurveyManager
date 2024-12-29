@@ -68,9 +68,6 @@ namespace EnlinqdSurveyManager.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Campaigns");
-
-            migrationBuilder.DropTable(
                 name: "Rewards");
 
             migrationBuilder.DropTable(
