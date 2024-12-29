@@ -1,68 +1,69 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace EnlinqdSurveyManager.Domain.Models.Order
 {
-    public class TremendousOrder
+    public class Order
     {
-        [JsonPropertyName("external_id")]
+
+        [JsonProperty("external_id")]
         public string? ExternalId { get; set; }
 
-        [JsonPropertyName("campaign_id")]
+        [JsonProperty("campaign_id")]
         public string? CampaignId { get; set; }
 
-        [JsonPropertyName("payment")]
+        [JsonProperty("payment")]
         public PaymentDetails Payment { get; set; }
 
-        [JsonPropertyName("reward")]
+        [JsonProperty("reward")]
         public RewardDetails Reward { get; set; }
 
         public class PaymentDetails
         {
-            [JsonPropertyName("funding_source_id")]
+            [JsonProperty("funding_source_id")]
             public string FundingSourceId { get; set; } = "BALANCE";
         }
 
         public class RewardDetails
         {
-            [JsonPropertyName("value")]
+            [JsonProperty("value")]
             public RewardValue Value { get; set; }
 
-            [JsonPropertyName("delivery")]
+            [JsonProperty("delivery")]
             public RewardDelivery Delivery { get; set; }
 
-            [JsonPropertyName("recipient")]
+            [JsonProperty("recipient")]
             public RewardRecipient Recipient { get; set; }
 
-            [JsonPropertyName("products")]
-            public List<string> Products { get; set; } = new List<string>();
+            [JsonProperty("products")]
+            public List<string> Products { get; set; }
         }
 
         public class RewardValue
         {
-            [JsonPropertyName("denomination")]
+            [JsonProperty("denomination")]
             public decimal Denomination { get; set; }
-            [JsonPropertyName("currency_code")]
+            [JsonProperty("currency_code")]
             public string CurrencyCode { get; set; }
         }
 
         public class RewardDelivery
         {
-            [JsonPropertyName("method")]
+            [JsonProperty("method")]
             public string Method { get; set; }
         }
 
         public class RewardRecipient
         {
-            [JsonPropertyName("name")]
+            [JsonProperty("name")]
             public string Name { get; set; }
 
-            [JsonPropertyName("email")]
+            [JsonProperty("email")]
             public string Email { get; set; }
         }
 
-        public TremendousOrder() { }
+        public Order() { }
 
-        public TremendousOrder(PaymentDetails paymentDetails, RewardValue rewardValue, RewardDelivery rewardDelivery, RewardRecipient rewardRecipient, List<string> products, string? campaignId = null, string? externalId = null) {
+        public Order(PaymentDetails paymentDetails, RewardValue rewardValue, RewardDelivery rewardDelivery, RewardRecipient rewardRecipient, List<string> products, string? campaignId = null, string? externalId = null) {
             this.ExternalId = externalId;
             this.CampaignId = campaignId;
             this.Payment = paymentDetails;

@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
 
-namespace EnlinqdSurveyManager.Controllers
+namespace EnlinqdSurveyManager.Controllers.Tremendous
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RewardsController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly HttpClient _httpClient;
         protected static readonly string _token = "TEST_viNlCbjK8--BjNJcB4lgM8FKHrY03K3nGa5uaNOliCB";
         protected static readonly string _endpoint = "https://testflight.tremendous.com/api/v2";
 
-        public RewardsController(HttpClient httpClient)
+        public ProductsController(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
@@ -38,6 +38,6 @@ namespace EnlinqdSurveyManager.Controllers
             }
         }
 
-        
+
     }
 }
