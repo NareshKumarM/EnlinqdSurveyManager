@@ -9,7 +9,8 @@ namespace EnlinqdSurveyManager.Infrastructure
         private readonly EnlinqdDBContext _dbContext;
 
         private ISurveyRepository _surveyRepo;
-        //private ICampaignRepository _campaignRepo;
+        private ICountryRepository _countryRepo;
+        private ICampaignRepository _campaignRepo;
         private IOrderRepository _orderRepo;
 
         public UnitOfWork(EnlinqdDBContext dbContext)
@@ -18,7 +19,11 @@ namespace EnlinqdSurveyManager.Infrastructure
         }
 
         public ISurveyRepository SurveyRepository => this._surveyRepo ?? (this._surveyRepo = new SurveyRepository(_dbContext));
-        //public ICampaignRepository CampaignRepository => this._campaignRepo ?? (this._campaignRepo = new CampaignRepository(_dbContext));
+
+        public ICountryRepository CountryRepository => this._countryRepo ?? (this._countryRepo = new CountryRepository(_dbContext));
+
+        public ICampaignRepository CampaignRepository => this._campaignRepo ?? (this._campaignRepo = new CampaignRepository(_dbContext));
+
         public IOrderRepository OrderRepository => this._orderRepo ?? (this._orderRepo = new OrderRepository(_dbContext));
 
         public async Task SaveChangesAsync(CancellationToken cancellationToken = default)

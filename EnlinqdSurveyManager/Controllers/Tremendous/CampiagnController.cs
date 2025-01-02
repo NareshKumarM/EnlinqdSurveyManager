@@ -5,6 +5,8 @@ using System.Net.Http.Headers;
 
 namespace EnlinqdSurveyManager.Controllers.Tremendous
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class CampaignController : ControllerBase
     {
         private readonly HttpClient _httpClient;
