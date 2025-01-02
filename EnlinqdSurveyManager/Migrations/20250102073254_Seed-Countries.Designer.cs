@@ -4,6 +4,7 @@ using EnlinqdSurveyManager.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EnlinqdSurveyManager.Migrations
 {
     [DbContext(typeof(EnlinqdDBContext))]
-    partial class SurveyDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250102073254_Seed-Countries")]
+    partial class SeedCountries
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

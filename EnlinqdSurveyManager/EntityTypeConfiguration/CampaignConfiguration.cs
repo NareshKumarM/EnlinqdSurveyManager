@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EnlinqdSurveyManager.EntityTypeConfiguration
 {
-    public class CampaignConfiguration : IEntityTypeConfiguration<Campaign>
+    public class CampaignConfiguration : IEntityTypeConfiguration<CampaignDb>
     {
-        public void Configure(EntityTypeBuilder<Campaign> builder)
+        public void Configure(EntityTypeBuilder<CampaignDb> builder)
         {
             builder.Property(c => c.Name).IsRequired().HasMaxLength(200);
             builder.Property(c => c.Description).HasMaxLength(500);
