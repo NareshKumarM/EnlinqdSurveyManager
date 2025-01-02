@@ -33,7 +33,7 @@ namespace EnlinqdSurveyManager.Controllers
 
         // GET: api/<SurveysController>
         [HttpGet("summary")]
-        public async Task<IActionResult> GetContacts()
+        public async Task<IActionResult> GetSurveys()
         {
             return Ok(await enlinqdDBContext.SurveyDefinitions.ToListAsync());
         }
